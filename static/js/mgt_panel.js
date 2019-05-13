@@ -4,6 +4,7 @@ Master List Toolbar
 class MasterListToolbar {
 
   constructor(id, model) {
+    this.filterName = model + "Filter";
     this.wbxObj = {
       view: "toolbar",
       id: id,
@@ -31,32 +32,16 @@ class MasterListToolbar {
           cols: [
             {
               view: "text",
-              id: "masterListFilter",
+              id: this.filterName,
               align: "left",
               label: 'Filter',
               width: 200
-            },
-            {
-              view: "button",
-              id: "clearFilterBtn",
-              label: "Clear",
-              type: "icon",
-              icon: "eraser",
-              tooltip: "Clear filter",
-              click: function() {
-                $$("masterListFilter").setValue("");
-                $$("masterListFilter").callEvent("onTimedKeypress");
-              }
             }
           ]
         }
       ]
     };
   };
-
-  static clearFilter() {
-    $$("masterListFilter").setValue("");
-  }
 }
 
 /*=====================================================================
@@ -92,7 +77,6 @@ class MasterListPanel {
   };
 
   clear() {
-    MasterListToolbar.clearFilter();
     this.list.clear();
   };
 

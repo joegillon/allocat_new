@@ -157,11 +157,19 @@ var prjPanelCtlr = {
       asnForm.loadForm(asn);
     });
 
-    let filterBox = $$("masterListFilter");
-    filterBox.attachEvent("onTimedKeypress", function() {
-      let value = filterBox.getValue();
+    let prjFilter = $$("ProjectFilter");
+    prjFilter.attachEvent("onTimedKeypress", function() {
+      let value = prjFilter.getValue();
       $$("prjList").filter(function(obj) {
         return obj[$$("prjList").config.display].toLowerCase().indexOf(value) != -1;
+      })
+    });
+
+    let asnFilter = $$("AssignmentFilter");
+    asnFilter.attachEvent("onTimedKeypress", function() {
+      let value = asnFilter.getValue();
+      $$("asnList").filter(function(obj) {
+        return obj[$$("asnList").config.display].toLowerCase().indexOf(value) != -1;
       })
     });
 
