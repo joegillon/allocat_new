@@ -52,13 +52,17 @@
 
     {% block scripts %}
       <script src="{{ url_for('static', filename='js/lib/webix.js') }}"></script>
-{#      <script src="{{ url_for('static', filename='js/lib/fdb-core.min.js') }}"></script>#}
+      <script src="{{ url_for('static', filename='js/lib/taffy-min.js') }}"></script>
       <script src="{{ url_for('static', filename="js/chameleon.js") }}"></script>
       <script src="{{ url_for('static', filename='js/ajax_dao.js') }}"></script>
-{#      <script src="{{ url_for('static', filename='js/helpers.js') }}"></script>#}
-     <script>
-{#        var fdb = new ForerunnerDB();#}
-{#        var db = fdb.db("allocat");#}
+      <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/month_lib.js') }}"></script>
+      <script>
+        let db = {
+          prjs: [],
+          emps: [],
+          asns: []
+        }
       </script>
     {% endblock scripts %}
 

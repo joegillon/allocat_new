@@ -9,17 +9,12 @@
 
   <script type="text/javascript">
     var projects = {{ projects|tojson }};
-    var employees = {{ employees|tojson }};
+    var empNames = {{ employees|tojson }};
     var assignments = {{ assignments|tojson }};
   </script>
 
-  <script src="{{ url_for('static', filename='js/lib/taffy-min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/month_lib.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/ajax_dao.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/projects/project_panel.js') }}"></script>
   <script src="{{ url_for('static', filename='js/mgt_panel.js') }}"></script>
-{#  <script src="{{ url_for('static', filename='js/project_assignment_panel.js') }}"></script>#}
+  <script src="{{ url_for('static', filename='js/projects/project_panel.js') }}"></script>
 
   <script type="text/javascript" charset="utf-8">
 

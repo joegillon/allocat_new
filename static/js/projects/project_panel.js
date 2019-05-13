@@ -68,7 +68,7 @@ var asnElements = [
     labelAlign: "right",
     name: "employee",
     width: 300,
-    options: employees.map(emp => emp.name),
+    options: empNames.map(emp => emp.name),
     invalidMessage: "Employee is required!"
   },
   {
@@ -131,17 +131,13 @@ var asnRules = {
 /*=====================================================================
 Project Panel Controller
 =====================================================================*/
-let db = {};
-
 var prjPanelCtlr = {
 
   init: function() {
 
-    db = {
-      prjs: TAFFY(projects),
-      emps: TAFFY(employees),
-      asns: TAFFY(assignments)
-    };
+    if (db.prjs.length == 0) db.prjs = TAFFY(projects);
+    if (db.asns.length == 0) db.asns = TAFFY(assignments);
+    db.empNames = TAFFY(empNames);
 
     this.initPrj();
     this.initAsn();
@@ -154,7 +150,7 @@ var prjPanelCtlr = {
     let prjPanel = this.prjListPanel;
     $$("asnList").attachEvent("onSelectChange", function() {
       let asn = $$("asnList").getSelectedItem();
-      asn.employee = db.emps({id: asn.emp_id}).first().name;
+      asn.employee = db.empNames({id: asn.emp_id}).first().name;
       asn.project = prjPanel.getSelection().nickname;
       asn.first_month = MonthLib.prettify(asn.first_month);
       asn.last_month = MonthLib.prettify(asn.last_month);
@@ -172,7 +168,7 @@ var prjPanelCtlr = {
     let lstPanel = this.asnListPanel;
     $$("prjList").attachEvent("onSelectChange", function() {
       let asns = $$("prjList").getSelectedItem().asns;
-      asns.map(asn => asn.employee = db.emps({id: asn.emp_id}).first().name);
+      asns.map(asn => asn.employee = db.empNames({id: asn.emp_id}).first().name);
       lstPanel.load(asns);
     });
 
