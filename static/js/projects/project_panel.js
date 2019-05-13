@@ -146,13 +146,9 @@ var prjPanelCtlr = {
     this.initPrj();
     this.initAsn();
 
-    webix.ui({
-      container: "content_container",
-      cols: [this.prjPanel.wbxObj, this.asnPanel.wbxObj]
-    });
+    this.buildUI();
 
     $$("prjDetailForm").bind($$("prjList"));
-    //$$("asnDetailForm").bind($$("asnList"));
 
     let asnForm = this.asnDetailForm;
     let prjPanel = this.prjListPanel;
@@ -177,8 +173,6 @@ var prjPanelCtlr = {
     $$("prjList").attachEvent("onSelectChange", function() {
       let asns = $$("prjList").getSelectedItem().asns;
       asns.map(asn => asn.employee = db.emps({id: asn.emp_id}).first().name);
-      //let empIds = db.prjs({id: prjId}).first().asns.map(asn => asn["emp_id"]);
-      //let emps = employees.filter(emp => empIds.indexOf(emp.id) != -1);
       lstPanel.load(asns);
     });
 
@@ -207,6 +201,42 @@ var prjPanelCtlr = {
     this.asnDetailPanel = new DetailPanel(this.asnDetailToolbar, this.asnDetailForm);
 
     this.asnPanel = new MasterDetailPanel(this.asnListPanel, this.asnDetailPanel);
+  },
+
+  buildUI: function() {
+    let prjView = {
+      id: "prjView",
+      rows: [this.prjPanel.wbxObj],
+      autowidth: true
+    };
+
+    let asnView = {
+      id: "asnView",
+      rows: [this.asnPanel.wbxObj],
+      autowidth:true
+    };
+
+    let prjMgtUI = {
+      container: "content_container",
+      rows: [
+        {
+          view: "segmented",
+          id: "prjMgtUI",
+          multiview: true,
+          value: "prjView",
+          options: [
+            {id: "prjView", value: "Projects"},
+            {id: "asnView", value: "Assignments"}
+          ]
+        },
+        {
+          cells: [prjView, asnView],
+          autowidth: true
+        }
+      ]
+    };
+
+    webix.ui(prjMgtUI);
   },
 
   load: function(data) {
