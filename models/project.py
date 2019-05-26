@@ -19,6 +19,10 @@ class Project(db.Model):
         lazy=True
     )
 
+    def __init__(self, d):
+        for attr in ['name', 'nickname', 'notes', 'first_month', 'last_month']:
+            setattr(self, attr, d[attr])
+
     def __str__(self):
         return self.nickname
 
@@ -36,3 +40,16 @@ class Project(db.Model):
     @staticmethod
     def get_all():
         return Project.query.order_by(Project.nickname).all()
+
+    @staticmethod
+    def get_one(prj_id):
+        return Project.query.filter_by(id=prj_id).first()
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+        return self.id
+
+    def drop(self):
+        db.session.delete(self)
+        db.session.commit()

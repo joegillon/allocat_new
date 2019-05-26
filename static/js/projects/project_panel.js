@@ -150,7 +150,7 @@ var prjPanelCtlr = {
     let prjPanel = this.prjListPanel;
     $$("asnList").attachEvent("onSelectChange", function() {
       let asn = $$("asnList").getSelectedItem();
-      asn.employee = db.empNames({id: asn.emp_id}).first().name;
+      asn.employee = db.empNames({id: asn.employee_id}).first().name;
       asn.project = prjPanel.getSelection().nickname;
       asn.first_month = MonthLib.prettify(asn.first_month);
       asn.last_month = MonthLib.prettify(asn.last_month);
@@ -176,10 +176,43 @@ var prjPanelCtlr = {
     let lstPanel = this.asnListPanel;
     $$("prjList").attachEvent("onSelectChange", function() {
       let asns = $$("prjList").getSelectedItem().asns;
+      if (asns === undefined || asns.length == 0) return;
       asns.map(asn => asn.employee = db.empNames({id: asn.emp_id}).first().name);
       lstPanel.load(asns);
     });
 
+    $$("listAddBtn").attachEvent("onItemClick", function() {
+      $$("prjDetailForm").clear();
+    });
+
+    $$("detailSaveBtn").attachEvent("onItemClick", function() {
+      let frm = $$("prjDetailForm");
+      if (!frm.validate()) return;
+      let values = frm.getValues({hidden: true});
+      let url = Flask.url_for("prj.prj_add");
+      ajaxDao.post(url, values, function(data) {
+        values.id = data["prj_id"];
+        db.prjs(values);
+        addToList("prjList", values, "nickname");
+      })
+    });
+
+    $$("detailDropBtn").attachEvent("onItemClick", function() {
+      webix.confirm(
+        "Are you sure you want to drop this project?",
+        "confirm-warning",
+        function (yes) {
+          if (yes) {
+            let prj_id = $$("prjDetailForm").getValues().id;
+            let url = Flask.url_for("prj.prj_drop");
+            ajaxDao.post(url, {prj_id: prj_id}, function(data) {
+              webix.message(data['msg']);
+            })
+          }
+        }
+      );
+    });
+    
     this.prjListPanel.load(projects);
   },
 

@@ -15,3 +15,14 @@ function isValidEffort(value) {
   var x = parseInt(value);
     return x >= 0 && x <= 100;
 }
+
+function dateSwitch(date) {
+  return data.slice(3) + data.slice(0, 2);
+}
+
+function addToList(ctl, values, sortFld) {
+  $$(ctl).add(values);
+  $$(ctl).sort(sortFld, "asc");
+  $$(ctl).showItem(values.id);
+  $$(ctl).select(values.id);
+}

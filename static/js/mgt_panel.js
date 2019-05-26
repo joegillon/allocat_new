@@ -19,6 +19,7 @@ class MasterListToolbar {
             {},
             {
               view: "button",
+              id: "listAddBtn",
               label: "Add",
               type: "icon",
               icon: "plus-circle",
@@ -140,10 +141,6 @@ class DetailForm {
       elements: elements,
       rules: rules
     }
-  };
-
-  clear() {
-    this.clear();
   };
 
   loadForm(data) {
