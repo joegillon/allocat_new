@@ -16,6 +16,7 @@ class Project(db.Model):
     assignments = db.relationship(
         'Assignment',
         backref='project',
+        # cascade='delete, delete-orphan',
         lazy=True
     )
 

@@ -38,6 +38,10 @@ def prj_add():
 @prj.route('/drop', methods=['POST'])
 def prj_drop():
     params = json.loads(request.form['params'])
-    project = Project.get_one(params['prj_id'])
-    project.drop()
+    try:
+        project = Project.get_one(params['prj_id'])
+        project.drop()
+    except Exception as ex:
+        msg = str(ex.orig) + '. See John Colozzi.'
+        return jsonify({'error': msg})
     return jsonify({'msg': "Project dropped!"})

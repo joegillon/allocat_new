@@ -206,7 +206,14 @@ var prjPanelCtlr = {
             let prj_id = $$("prjDetailForm").getValues().id;
             let url = Flask.url_for("prj.prj_drop");
             ajaxDao.post(url, {prj_id: prj_id}, function(data) {
-              webix.message(data['msg']);
+              if (data.hasOwnProperty('error')) {
+                webix.message({type: "error", text: data["error"]});
+              } else {
+                webix.message(data['msg']);
+                db.asns({project_id: prj_id}).remove();
+                db.prjs({id: prj_id}).remove();
+                $$("prjList").remove(prj_id);
+              }
             })
           }
         }
@@ -274,10 +281,6 @@ var prjPanelCtlr = {
     };
 
     webix.ui(prjMgtUI);
-  },
-
-  load: function(data) {
-    this.prjListPanel.load(data);
   }
 
 };
