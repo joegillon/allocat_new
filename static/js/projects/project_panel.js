@@ -150,7 +150,6 @@ var prjPanelCtlr = {
     let prjPanel = this.prjListPanel;
     $$("asnList").attachEvent("onSelectChange", function() {
       let asn = $$("asnList").getSelectedItem();
-      asn.employee = db.empNames({id: asn.employee_id}).first().name;
       asn.project = prjPanel.getSelection().nickname;
       asn.first_month = MonthLib.prettify(asn.first_month);
       asn.last_month = MonthLib.prettify(asn.last_month);
@@ -182,7 +181,7 @@ var prjPanelCtlr = {
     });
 
     $$("listAddBtn").attachEvent("onItemClick", function() {
-      $$("prjDetailForm").clear();
+      $$("asnDetailForm").clear();
     });
 
     $$("detailSaveBtn").attachEvent("onItemClick", function() {

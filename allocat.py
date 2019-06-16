@@ -12,6 +12,7 @@ configure_ui(app)
 
 @app.route('/')
 def homepage():
+    app.logger.info('User Joe has opened app.')
     return render_template(
         'home.html',
         title='Allocat'

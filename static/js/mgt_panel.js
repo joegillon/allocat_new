@@ -16,7 +16,6 @@ class MasterListToolbar {
               view: "label",
               label: model + "s"
             },
-            {},
             {
               view: "button",
               id: "listAddBtn",

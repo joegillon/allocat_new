@@ -6,9 +6,12 @@ from models.assignment import Assignment
 
 prj = Blueprint('prj', __name__, url_prefix='/prj')
 
+from allocat import app
+
 
 @prj.route('/list', methods=['GET'])
 def prj_list():
+    app.logger.info('User has opened Projects.')
     rex = Project.get_all()
     prjs = [rec.serialize() for rec in rex] if rex else []
 
