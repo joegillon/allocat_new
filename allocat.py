@@ -9,10 +9,13 @@ app_path = os.path.dirname(__file__)
 configure_app(app)
 configure_ui(app)
 
+# Ugly kluge
+if len(app.logger.handlers) == 3:
+    app.logger.removeHandler(app.logger.handlers[2])
+
 
 @app.route('/')
 def homepage():
-    app.logger.info('User Joe has opened app.')
     return render_template(
         'home.html',
         title='Allocat'

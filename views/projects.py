@@ -1,5 +1,6 @@
 import json
 from flask import Blueprint, render_template, request, jsonify
+from utils.logging_decorator import log_info
 from models.project import Project
 from models.employee import Employee
 from models.assignment import Assignment
@@ -10,8 +11,9 @@ from allocat import app
 
 
 @prj.route('/list', methods=['GET'])
+@log_info(app.logger)
 def prj_list():
-    app.logger.info('User has opened Projects.')
+    # app.logger.info('User has opened Projects.')
     rex = Project.get_all()
     prjs = [rec.serialize() for rec in rex] if rex else []
 
